@@ -69,6 +69,9 @@ Defined in [`custom.proto`](proto/zmk/custom.proto):
   - `identifier` — a stable, unique string identifier for the subsystem (this is what a client
     matches against).
   - `ui_url` — zero or more URLs pointing to web UIs that know how to talk to this subsystem.
+  - `version` — a subsystem-defined unsigned 32-bit API version for client compatibility checks.
+    `0` means unspecified, including older firmware that omits this field. Each subsystem defines
+    its own version semantics; clients should check supported versions before exchanging payloads.
 
 - **`CallRequest` / `CallResponse`** — the actual RPC. Both carry a `subsystem_index` (matching
   `CustomSubsystemInfo.index`) and an opaque `payload` (`bytes`). The custom subsystem protocol is
@@ -83,7 +86,7 @@ Defined in [`custom.proto`](proto/zmk/custom.proto):
 
 1. Client sends `custom.ListCustomSubsystemRequest`.
 2. Device replies with `ListCustomSubsystemResponse` listing each `CustomSubsystemInfo`
-   (`index`, `identifier`, `ui_url`).
+   (`index`, `identifier`, `ui_url`, `version`).
 3. Client matches the subsystem it cares about by `identifier`, remembers its current `index`,
    and (optionally) opens one of the `ui_url`s to drive it.
 4. Client exchanges module-defined payloads via `CallRequest` / `CallResponse` on that `index`.
