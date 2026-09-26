@@ -16,6 +16,9 @@ message CustomSubsystemInfo {
     string identifier = 2;
     // Subsystem UI URLs which supports interaction with the subsystem
     repeated string ui_url = 3;
+    // Subsystem-defined API version for client compatibility checks.
+    // Zero means unspecified, including firmware predating this field.
+    uint32 version = 4;
 }
 
 message CallRequest {
