@@ -104,11 +104,3 @@ nanopb options:
 
 * Document transport protocol used with these messages
 * Release/versioning strategy
-
-## Schema tests
-
-With `protoc` and the Python `protobuf` package installed, run:
-
-```sh
-python3 -m unittest discover -s tests -v
-```
